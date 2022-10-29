@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const displayTable = require('console.table');
 
 const dbCon = mysql.createConnection(
     {
@@ -10,3 +11,14 @@ const dbCon = mysql.createConnection(
     },
     console.log(`Connected!`)
   );
+
+  // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+
+  //bonus
+  // Update employee managers.
+
+  // * View employees by manager.
+  
+  // * View employees by department.
+  
+  // * Delete departments, roles, and employees.
