@@ -1,4 +1,4 @@
-INSERT INTO department (department_name)
+INSERT INTO department (name)
 VALUES ("Human Resources"),
        ("Accounting "),
        ("Legal"),
@@ -6,7 +6,7 @@ VALUES ("Human Resources"),
        ("Development");
 
 
-INSERT INTO employee_role (role_title, role_salary, department_id)
+INSERT INTO employee_role (title, salary, department_id)
 VALUES ("HR-Manager", 80000.00, 1),
        ("HR-Team Manager", 60000.00, 1),
        ("Accounting-Manager", 140000.00, 2),
@@ -18,7 +18,7 @@ VALUES ("HR-Manager", 80000.00, 1),
        ("Development-Manager", 150000.00, 5),
        ("Development-Team Manager", 80000.00, 5);
 
-INSERT INTO employee (employee_first_name, employee_last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Robert", "Smith", 1, NULL),
        ("Stevie", "Nicks", 3, NULL),   
        ("James", "Mercer", 5, NULL),

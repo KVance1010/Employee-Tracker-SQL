@@ -16,6 +16,7 @@ const mainMenu = [
 			'delete a department',
 			'delete a role',
 			'delete an employee',
+			'quit'
 		],
 	},
 ];

@@ -25,55 +25,89 @@ const dbCon = mysql.createConnection(
 
 const mainMenuPromote = () => {
 	inquirer.prompt(mainMenu).then((selection) => {
-		switch ({selection}) {
-      case 'view all departments':
-
-      break;
+		switch ({ selection }) {
+			case 'view all departments':
+				viewAllDepartments();
+				break;
 			case 'view all roles':
-
-      break;
+				viewAllRoles();
+				break;
 			case 'view all employees':
-
-      break;
-      //case  "view employee's manager":
-
-      // break;
+				viewAllEmployees();
+				break;
+			//case  "view employee's manager":
+			//   viewManagerByEmployee();
+			//   break;
 			case 'add a department':
-
-      break;
+				deleteDepartmentPromote();
+				break;
 			case 'add a role':
-
-      break;
+				deleteRolePromote();
+				break;
 			case 'add an employee':
-
-      break;
+				deleteEmployeePromote();
+				break;
 			case "update an employee's role":
-
-      break;
+				addDepartmentPromote();
+				break;
 			case "update an employee's manager":
-
-      break;
+				addRolePromote();
+				break;
 			case 'delete a department':
-
-      break;
+				addEmployeePromote();
+				break;
 			case 'delete a role':
-
-      break;
+				updateManagerPromote();
+				break;
 			case 'delete an employee':
-
-      break;
+				updateRolePromote();
+				break;
+			default:
+			return;
 		}
 	});
 };
-const viewAllDepartments = () => {};
-const deleteDepartmentPromote = () => {};
-const deleteDepartmentPromote = () => {};
-const deleteDepartmentPromote = () => {};
-const deleteDepartmentPromote = () => {};
-const deleteRolePromote = () => {};
-const deleteEmployeePromote = () => {};
-const addDepartmentPromote = () => {};
-const addRolePromote = () => {};
-const addEmployeePromote = () => {};
-const updateManagerPromote = () => {};
-const updateRolePromote = () => {};
+
+const viewAllDepartments = () => {
+	dbCon.query('SELECT * FROM department ORDER BY department.id ASC', err => err ? console.log(err):console.table(result));
+};
+
+const viewAllRoles = () => {
+	dbCon.query('SELECT r.id, r.title, d.name, r.salary AS salary, AS department FROM employee_role AS r JOIN department AS d ON r.department_id = d.id ORDER BY r.id ASC', err => err ? console.log(err) : console.table(result));
+};
+
+const viewAllEmployees = () => {
+	dbCon.query('SELECT e.id, e.first_name, e.last_name, r.title, e.hire_date, d.name AS department, r.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee AS e JOIN employee_role AS r on e.role_id = r.id JOIN department AS d on r.department_id = d.id LEFT JOIN employee AS manager ON manager.id = e.manager_id ORDER BY e.id ASC') , err => err ? console.log(err) : console.table(result);
+};
+
+// const viewManagerByEmployee = () => {};
+
+const deleteDepartmentPromote = () => {
+	const deleteRow =
+	dbCon.query("DELETE FROM  WHERE id = ?", deletedRow, (err, result) => err ? console.log(err):console.log(result));
+}	
+
+const deleteRolePromote = () => {
+	
+};
+const deleteEmployeePromote = () => {
+
+};
+const addDepartmentPromote = () => {
+
+};
+const addRolePromote = () => {
+
+};
+const addEmployeePromote = () => {
+
+};
+const updateManagerPromote = () => {
+
+};
+const updateRolePromote = () => {
+
+};
+
+
+mainMenuPromote();
