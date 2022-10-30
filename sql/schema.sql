@@ -23,7 +23,6 @@ CREATE TABLE employee (
   id INT AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  hire_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   role_id INT,
   manager_id INT DEFAULT NULL,
   FOREIGN Key (role_id) REFERENCES employee_role(id),

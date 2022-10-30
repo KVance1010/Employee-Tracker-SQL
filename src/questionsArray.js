@@ -7,19 +7,21 @@ const mainMenu = [
 			'view all departments',
 			'view all roles',
 			'view all employees',
-            // "view employee's manager",
+			'view employees manager'
 			'add a department',
 			'add a role',
 			'add an employee',
 			"update an employee's role",
 			"update an employee's manager",
-			'delete a department',
-			'delete a role',
-			'delete an employee',
 			'quit'
 		],
 	},
 ];
+
+// 'delete a department',
+// 'delete a role',
+// 'delete an employee',
+// "view employee's manager",
 
 const addDepartment = [
 	{
@@ -114,4 +116,4 @@ const deleteEmployee = [
 	}
 ];
 
-module.exports = {mainMenu, deleteDepartment, deleteRole, deleteEmployee, addDepartment, addRole, addEmployee, updateManager, updateRole};
+module.exports = {mainMenu, deleteDepartment, deleteRole, deleteEmployee, addDepartment, addRole, addEmployee, updateManager, updateRole, viewEmployeesManager};
