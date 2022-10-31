@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const displayVariable = require('console.table');
 
-// Question array for inquirer prompt 
+// Question array for inquirer prompt
 const {
 	mainMenu,
 	deleteDepartment,
@@ -13,8 +13,8 @@ const {
 	addEmployee,
 	updateManager,
 	updateRole,
+	showEmployeeByManager,
 } = require('./src/questionsArray');
-
 
 // Queries object with a list of queries
 let queries = require('./src/queries');
@@ -44,9 +44,9 @@ const mainMenuPromote = () => {
 			case 'view all employees':
 				viewInfo(queries.viewAllEmployeesQuery);
 				break;
-			// case  "view employee's by manager":
-			//   inquirerPrompt(, , alterInfo);
-			//   break;
+			case "view employee's by manager":
+				showAll(showEmployeeByManager, queries.viewEmployeesByManagerQuery);
+				break;
 			// case "view employees by department":
 			// 	inquirerPrompt(, , alterInfo);
 			// 	break;
@@ -66,13 +66,13 @@ const mainMenuPromote = () => {
 			// 	inquirerPrompt( , queries.updateManagerQuery, alterInfo);
 			// 	break;
 			// case 'delete a department':
-			// 	inquirerPrompt( , queries.updateEmployeeQuery, alterInfo);
+			// 	inquirerPrompt( , queries., alterInfo);
 			// 	break;
 			// case 'delete a role':
-			// 	inquirerPrompt( , queries.updateEmployeeQuery, alterInfo);
+			// 	inquirerPrompt( , queries., alterInfo);
 			// 	break;
 			// case 'delete an employee':
-			// 	inquirerPrompt( , queries.updateEmployeeQuery, alterInfo);
+			// 	inquirerPrompt( , queries., alterInfo);
 			// 	break;
 			default:
 				return;
@@ -117,7 +117,7 @@ const updateInfo = (query, updateRoles) => {
 			result.forEach((empName) => {
 				employees.push({
 					name: `${empName.first_name} ${empName.last_name}`,
-					value: empName.id
+					value: empName.id,
 				});
 			});
 			updateRoles[0].choices = employees;
@@ -128,22 +128,50 @@ const updateInfo = (query, updateRoles) => {
 					returnedRole.forEach((roleTitle) => {
 						roles.push({
 							name: roleTitle.title,
-							value: roleTitle.id
+							value: roleTitle.id,
 						});
 					});
 					updateRoles[1].choices = roles;
-					passRoleAndEmployees(query, updateRoles);
+					passRoleAndEmployees(query[2], updateRoles);
 				}
 			});
 		}
 	});
 };
 
+const showAll = (questions, queries) => {
+	const arr = [];
+	dbCon.query(queries[0], (error, returned) => {
+		if (error) {
+			console.error(error);
+		} else {
+			returned.forEach((element) => {
+				arr.push({
+					name: element.name,
+					value: element.id,
+				});
+			});
+			questions[0].choices = arr;
+			inquirer.prompt(questions).then((results) => {
+				const parameters = [results.name];
+				dbCon.query(queries[1], parameters, (error, result) => {
+					if (error) {
+						console.error(error);
+					} else {
+						displayTable(result);
+					}
+				});
+			});
+		}
+	});
+};
+
+
 // Updates the user role
 const passRoleAndEmployees = (query, questions) => {
 	inquirer.prompt(questions).then((results) => {
 		const parameters = [results.role, results.employee];
-		dbCon.query(query[2], parameters, (error, result) => {
+		dbCon.query(query, parameters, (error, result) => {
 			if (error) {
 				console.error(error);
 			} else {

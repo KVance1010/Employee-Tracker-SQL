@@ -12,11 +12,12 @@ const mainMenu = [
 			// 'delete a department',
 			// 'delete a role',
 			// 'delete an employee',
-			// "view employee's by manager",
+			"view employee's by manager",
 			'add an employee',
 			// 'view employees by department',
 			"update an employee's role",
-			// "update an employee's manager",
+			// 'update an employee's manager',
+			// 'view department total utilized budget'
 			'quit',
 		],
 	},
@@ -77,15 +78,15 @@ const addEmployee = [
 const updateRole = [
 	{
 		name: 'employee',
-		message: "Select an employee to update?",
+		message: 'Select an employee to update?',
 		type: 'list',
-		choices: []
+		choices: [],
 	},
 	{
 		name: 'role',
 		message: "What is the employee's new role?",
 		type: 'list',
-		choices: []
+		choices: [],
 	},
 ];
 const updateManager = [
@@ -121,6 +122,12 @@ const deleteEmployee = [
 		type: 'input',
 	},
 ];
+const showEmployeeByManager = [{
+	name:'name',
+	message: 'Show employee by manager',
+	type: 'list',
+	choices: []
+}];
 
 module.exports = {
 	mainMenu,
@@ -132,5 +139,5 @@ module.exports = {
 	addEmployee,
 	updateManager,
 	updateRole,
+	showEmployeeByManager
 };
-
