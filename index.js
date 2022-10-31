@@ -115,7 +115,10 @@ const updateInfo = (query, updateRoles) => {
 			console.error(error);
 		} else {
 			result.forEach((empName) => {
-				employees.push(empName.name);
+				employees.push({
+					name: `${empName.first_name} ${empName.last_name}`,
+					value: empName.id
+				});
 			});
 			updateRoles[0].choices = employees;
 			dbCon.query(query[1], (error, returnedRole) => {
@@ -123,7 +126,10 @@ const updateInfo = (query, updateRoles) => {
 					console.error(error);
 				} else {
 					returnedRole.forEach((roleTitle) => {
-						roles.push(roleTitle.title);
+						roles.push({
+							name: roleTitle.title,
+							value: roleTitle.id
+						});
 					});
 					updateRoles[1].choices = roles;
 					passRoleAndEmployees(query, updateRoles);
@@ -136,9 +142,7 @@ const updateInfo = (query, updateRoles) => {
 // Updates the user role
 const passRoleAndEmployees = (query, questions) => {
 	inquirer.prompt(questions).then((results) => {
-		const parameters = results.employee.split(' ');
-		parameters.unshift(results.role);
-		console.log(parameters);
+		const parameters = [results.role, results.employee];
 		dbCon.query(query[2], parameters, (error, result) => {
 			if (error) {
 				console.error(error);

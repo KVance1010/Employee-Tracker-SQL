@@ -6,7 +6,7 @@ const allQueries = {
 	deleteRoleQuery: '',
 	deleteEmployeeQuery: '',
 	updateManagerQuery: '',
-	updateRoleQuery: ['SELECT CONCAT(e.first_name, " " , e.last_name) AS name from employee AS e','SELECT r.title FROM employee_role AS r', 'UPDATE employee SET role_id = (SELECT r.id FROM employee_role AS r WHERE r.title = ?) WHERE e.id = (SELECT m.id FROM employee AS m WHERE m.first_name = ? AND m.last_name = ? )'],
+	updateRoleQuery: ['SELECT * FROM employee', 'SELECT * FROM employee_role', 'UPDATE employee SET role_id = ? WHERE id = ?'],
 	viewAllDepartmentsQuery:
 		'SELECT * FROM department ORDER BY department.id ASC',
 	viewAllEmployeesQuery:
