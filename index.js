@@ -14,6 +14,7 @@ const {
 	updateManager,
 	updateRole,
 	showEmployeeByManager,
+	showEmployeeByDepartment
 } = require('./src/questionsArray');
 
 // Queries object with a list of queries
@@ -45,11 +46,11 @@ const mainMenuPromote = () => {
 				viewInfo(queries.viewAllEmployeesQuery);
 				break;
 			case "view employee's by manager":
-				showAll(showEmployeeByManager, queries.viewEmployeesByManagerQuery);
+				showAllBy(showEmployeeByManager, queries.viewEmployeesByManagerQuery);
 				break;
-			// case "view employees by department":
-			// 	inquirerPrompt(, , alterInfo);
-			// 	break;
+			case "view employees by department":
+				showAllBy(showEmployeeByDepartment, queries.viewAllEmployeesByDepartment);
+				break;
 			case 'add a department':
 				inquirerPrompt(addDepartment, queries.addDepartmentQuery, alterInfo);
 				break;
@@ -139,7 +140,8 @@ const updateInfo = (query, updateRoles) => {
 	});
 };
 
-const showAll = (questions, queries) => {
+// shows all employees by department or manager
+const showAllBy = (questions, queries) => {
 	const arr = [];
 	dbCon.query(queries[0], (error, returned) => {
 		if (error) {

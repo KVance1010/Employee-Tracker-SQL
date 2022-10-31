@@ -4,20 +4,20 @@ const mainMenu = [
 		message: 'Main menu: selection an option',
 		type: 'list',
 		choices: [
-			'view all departments',
-			'view all roles',
-			'view all employees',
 			'add a department',
+			'add an employee',
 			'add a role',
 			// 'delete a department',
 			// 'delete a role',
 			// 'delete an employee',
-			"view employee's by manager",
-			'add an employee',
-			// 'view employees by department',
 			"update an employee's role",
 			// 'update an employee's manager',
+			'view all departments',
+			'view all roles',
+			'view all employees',
 			// 'view department total utilized budget'
+			'view employees by department',
+			"view employee's by manager",
 			'quit',
 		],
 	},
@@ -128,6 +128,13 @@ const showEmployeeByManager = [{
 	type: 'list',
 	choices: []
 }];
+const showEmployeeByDepartment = [{
+	name:'name',
+	message: 'Show employee by department',
+	type: 'list',
+	choices: []
+}];
+
 
 module.exports = {
 	mainMenu,
@@ -139,5 +146,6 @@ module.exports = {
 	addEmployee,
 	updateManager,
 	updateRole,
-	showEmployeeByManager
+	showEmployeeByManager,
+	showEmployeeByDepartment
 };
