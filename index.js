@@ -61,11 +61,11 @@ const mainMenuPromote = () => {
 				inquirerPrompt(addEmployee, queries.addEmployeeQuery, alterInfo);
 				break;
 			case "update an employee's role":
-				updateInfo(queries.updateRoleQuery, updateRole);
+				passInfo(updateRole, queries.updateRoleQuery);
 				break;
-			// case "update an employee's manager":
-			// 	inquirerPrompt( , queries.updateManagerQuery, alterInfo);
-			// 	break;
+			case "update an employee's manager":
+				passInfo(updateManager, queries.updateManagerQuery);
+				break;
 			// case 'delete a department':
 			// 	inquirerPrompt( , queries., alterInfo);
 			// 	break;
@@ -108,35 +108,49 @@ const alterInfo = (query, results) => {
 };
 
 // Creates the list of employees and roles for the update function
-const updateInfo = (query, updateRoles) => {
-	const roles = [];
-	const employees = [];
+const passInfo = (questions, query) => {
+	const arr1 = [];
+	const arr2 = [];
 	dbCon.query(query[0], (error, result) => {
 		if (error) {
 			console.error(error);
 		} else {
-			result.forEach((empName) => {
-				employees.push({
-					name: `${empName.first_name} ${empName.last_name}`,
-					value: empName.id,
+			result.forEach((element) => {
+				arr1.push({
+					name: element.name,
+					value: element.id,
 				});
 			});
-			updateRoles[0].choices = employees;
-			dbCon.query(query[1], (error, returnedRole) => {
+			questions[0].choices = arr1;
+			dbCon.query(query[1], (error, returned) => {
 				if (error) {
 					console.error(error);
 				} else {
-					returnedRole.forEach((roleTitle) => {
-						roles.push({
-							name: roleTitle.title,
-							value: roleTitle.id,
+					returned.forEach((element) => {
+						arr2.push({
+							name: element.name,
+							value: element.id,
 						});
 					});
-					updateRoles[1].choices = roles;
-					passRoleAndEmployees(query[2], updateRoles);
+					questions[1].choices = arr2;
+					updateInfo(query[2], questions);
 				}
 			});
 		}
+	});
+};
+
+// Updates the user role and manager
+const updateInfo = (query, questions) => {
+	inquirer.prompt(questions).then((results) => {
+		const parameters = [results.name, results.employee];
+		dbCon.query(query, parameters, (error, result) => {
+			if (error) {
+				console.error(error);
+			} else {
+				displayTable(result);
+			}
+		});
 	});
 };
 
@@ -168,20 +182,6 @@ const showAllBy = (questions, queries) => {
 	});
 };
 
-
-// Updates the user role
-const passRoleAndEmployees = (query, questions) => {
-	inquirer.prompt(questions).then((results) => {
-		const parameters = [results.role, results.employee];
-		dbCon.query(query, parameters, (error, result) => {
-			if (error) {
-				console.error(error);
-			} else {
-				displayTable(result);
-			}
-		});
-	});
-};
 
 // Starts the application
 mainMenuPromote();

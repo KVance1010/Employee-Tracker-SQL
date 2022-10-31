@@ -7,10 +7,14 @@ const allQueries = {
 	deleteDepartmentQuery: '',
 	deleteRoleQuery: '',
 	deleteEmployeeQuery: '',
-	updateManagerQuery: '',
+	updateManagerQuery: [
+		'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee',
+		'SELECT DISTINCT CONCAT(m.first_name, " ", m.last_name) AS name, e.manager_id AS id from employee AS e JOIN employee AS m ON e.manager_id = m.id',
+		'UPDATE employee SET manager_id = ? WHERE id = ?',
+	],
 	updateRoleQuery: [
-		'SELECT * FROM employee',
-		'SELECT * FROM employee_role',
+		'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee',
+		'SELECT id, title AS name FROM employee_role',
 		'UPDATE employee SET role_id = ? WHERE id = ?',
 	],
 	viewAllDepartmentsQuery:
@@ -24,7 +28,7 @@ const allQueries = {
 	viewAllRolesQuery:
 		'SELECT r.id, r.title, d.name as department, r.salary FROM employee_role AS r JOIN department AS d ON r.department_id = d.id ORDER BY r.id ASC',
 	viewEmployeesByManagerQuery: [
-		'SELECT DISTINCT CONCAT (m.first_name, " ", m.last_name) AS name, e.manager_id AS id from employee AS e JOIN employee AS m ON e.manager_id = m.id',
+		'SELECT DISTINCT CONCAT(m.first_name, " ", m.last_name) AS name, e.manager_id AS id from employee AS e JOIN employee AS m ON e.manager_id = m.id',
 		'SELECT CONCAT(e.first_name , " " , e.last_name) AS name, r.title, r.salary FROM employee AS e JOIN employee_role AS r Where e.manager_id = ?',
 	],
 };
