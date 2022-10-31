@@ -15,7 +15,7 @@ const mainMenu = [
 			'view all departments',
 			'view all roles',
 			'view all employees',
-			// 'view department total utilized budget'
+			'view department total payroll total',
 			'view employees by department',
 			'view employee\'s by manager',
 			'quit',

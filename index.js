@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const displayVariable = require('console.table');
 
+// mysql -u (database) -h (host) -p (password)
+
 // Question array for inquirer prompt
 const {
 	mainMenu,
@@ -21,15 +23,13 @@ const {
 let queries = require('./src/queries');
 
 // Database connection object
-const dbCon = mysql.createConnection(
-	{
-		host: 'localhost',
-		user: 'root',
-		password: 'OZuzzFA^qkfHKJkU9u=8v4=eS+Jt/8%',
-		database: 'employee_tracker_db',
-	},
-	console.log(`Connected!`)
-);
+const con = process.env.JAWSDB_URL || {
+	host: 'localhost',
+	user: 'root',
+	password: 'OZuzzFA^qkfHKJkU9u=8v4=eS+Jt/8%',
+	database: 'employee_tracker_db',
+};
+const dbCon = mysql.createConnection(con);
 
 // Main Menu for the application
 const mainMenuPromote = () => {
@@ -45,6 +45,9 @@ const mainMenuPromote = () => {
 			case 'view all employees':
 				viewInfo(queries.viewAllEmployeesQuery);
 				break;
+			case 'view department total payroll total':
+				viewInfo(queries.viewDepartmentPayrollQuery);
+				break;
 			case "view employee's by manager":
 				showAllBy(showEmployeeByManager, queries.viewEmployeesByManagerQuery);
 				break;
@@ -52,13 +55,13 @@ const mainMenuPromote = () => {
 				showAllBy(showEmployeeByDepartment, queries.viewAllEmployeesByDepartment);
 				break;
 			case 'add a department':
-				inquirerPrompt(addDepartment, queries.addDepartmentQuery, alterInfo);
+				inquirerPrompt(addDepartment, queries.addDepartmentQuery);
 				break;
 			case 'add a role':
-				inquirerPrompt(addRole, queries.addRoleQuery, alterInfo);
+				inquirerPrompt(addRole, queries.addRoleQuery);
 				break;
 			case 'add an employee':
-				inquirerPrompt(addEmployee, queries.addEmployeeQuery, alterInfo);
+				inquirerPrompt(addEmployee, queries.addEmployeeQuery);
 				break;
 			case "update an employee's role":
 				passInfo(updateRole, queries.updateRoleQuery);
@@ -82,8 +85,8 @@ const mainMenuPromote = () => {
 };
 
 // Handle all inquirer prompts and passes a callback function
-const inquirerPrompt = (question, query, nextStep) => {
-	inquirer.prompt(question).then((results) => nextStep(query, results));
+const inquirerPrompt = (question, query) => {
+	inquirer.prompt(question).then((results) => alterInfo(query, results));
 };
 
 // displays the information to the console
@@ -171,17 +174,12 @@ const showAllBy = (questions, queries) => {
 			inquirer.prompt(questions).then((results) => {
 				const parameters = [results.name];
 				dbCon.query(queries[1], parameters, (error, result) => {
-					if (error) {
-						console.error(error);
-					} else {
-						displayTable(result);
-					}
+					error ? console.error(error) : displayTable(result);
 				});
 			});
 		}
 	});
 };
-
 
 // Starts the application
 mainMenuPromote();

@@ -27,6 +27,7 @@ const allQueries = {
 		'SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee AS e JOIN employee_role AS r on e.role_id = r.id JOIN department AS d on r.department_id = d.id LEFT JOIN employee AS manager ON manager.id = e.manager_id ORDER BY e.id ASC',
 	viewAllRolesQuery:
 		'SELECT r.id, r.title, d.name as department, r.salary FROM employee_role AS r JOIN department AS d ON r.department_id = d.id ORDER BY r.id ASC',
+	viewDepartmentPayrollQuery:'SELECT d.name as department, SUM(r.salary) AS payroll_total FROM department AS d JOIN employee_role AS r ON r.department_id = d.id  GROUP BY department',
 	viewEmployeesByManagerQuery: [
 		'SELECT DISTINCT CONCAT(m.first_name, " ", m.last_name) AS name, e.manager_id AS id from employee AS e JOIN employee AS m ON e.manager_id = m.id',
 		'SELECT CONCAT(e.first_name , " " , e.last_name) AS name, r.title, r.salary FROM employee AS e JOIN employee_role AS r Where e.manager_id = ?',
