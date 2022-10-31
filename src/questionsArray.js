@@ -1,27 +1,26 @@
 const mainMenu = [
 	{
 		name: 'selection',
-		message: 'Add a new employee?',
+		message: 'Main menu: selection an option',
 		type: 'list',
 		choices: [
 			'view all departments',
 			'view all roles',
 			'view all employees',
-			'view employees manager'
 			'add a department',
 			'add a role',
+			// 'delete a department',
+			// 'delete a role',
+			// 'delete an employee',
+			// "view employee's by manager",
 			'add an employee',
+			// 'view employees by department',
 			"update an employee's role",
-			"update an employee's manager",
-			'quit'
+			// "update an employee's manager",
+			'quit',
 		],
 	},
 ];
-
-// 'delete a department',
-// 'delete a role',
-// 'delete an employee',
-// "view employee's manager",
 
 const addDepartment = [
 	{
@@ -44,76 +43,94 @@ const addRole = [
 	},
 	{
 		name: 'department_id',
-		message: 'What is the department id for this role?',
+		message: 'What is the department name for this role?',
 		type: 'input',
 	},
 ];
 const addEmployee = [
 	{
 		name: 'employee_first_name',
-		message: 'What is the employee\'s first name?',
+		message: "What is the employee's first name?",
 		type: 'input',
 	},
 	{
 		name: 'employee_last_name',
-		message: 'What is the employee\'s first name?',
+		message: "What is the employee's last name?",
 		type: 'input',
 	},
 	{
 		name: 'role_id',
-		message: 'what is the id of the role you would like to add this employee to?',
+		message: 'what is the name of the role this employee will be doing?',
 		type: 'input',
 	},
 	{
-		name: 'manager_id',
-		message: 'What is this employee managers ID?',
+		name: 'manager_first',
+		message: 'What is the first name of the manger for this employee?',
+		type: 'input',
+	},
+	{
+		name: 'manager_last',
+		message: 'What is the last name of the manger for this employee?',
 		type: 'input',
 	},
 ];
-const updateRole =[
-    {
-		name: 'id',
-		message: 'What is the employee\'s id?',
-		type: 'input',
+const updateRole = [
+	{
+		name: 'employee',
+		message: "Select an employee to update?",
+		type: 'list',
+		choices: []
 	},
 	{
 		name: 'role',
-		message: 'What is the employee\'s new role?',
-		type: 'input',
+		message: "What is the employee's new role?",
+		type: 'list',
+		choices: []
 	},
 ];
 const updateManager = [
-    {
+	{
 		name: 'id',
-		message: 'What is the employee\'s ID?',
+		message: "What is the employee's ID?",
 		type: 'input',
 	},
 	{
 		name: 'manager_id',
-		message: 'What is the employee\'s new manager\'s ID?',
+		message: "What is the employee's new manager's ID?",
 		type: 'input',
 	},
 ];
 const deleteDepartment = [
-    {
+	{
 		name: 'id',
 		message: 'What is the ID of the department you would like to delete?',
 		type: 'input',
-	}
+	},
 ];
 const deleteRole = [
-    {
+	{
 		name: 'id',
 		message: 'What is the ID of the role you would like to delete?',
 		type: 'input',
-	}
+	},
 ];
 const deleteEmployee = [
-    {
+	{
 		name: 'id',
 		message: 'What is the ID of the employee you would like to delete?',
 		type: 'input',
-	}
+	},
 ];
 
-module.exports = {mainMenu, deleteDepartment, deleteRole, deleteEmployee, addDepartment, addRole, addEmployee, updateManager, updateRole, viewEmployeesManager};
+module.exports = {
+	mainMenu,
+	deleteDepartment,
+	deleteRole,
+	deleteEmployee,
+	addDepartment,
+	addRole,
+	addEmployee,
+	updateManager,
+	updateRole,
+};
+

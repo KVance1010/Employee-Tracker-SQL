@@ -7,16 +7,16 @@ VALUES ("Human Resources"),
 
 
 INSERT INTO employee_role (title, salary, department_id)
-VALUES ("HR-Manager", 80000.00, 1),
-       ("HR-Team Manager", 60000.00, 1),
-       ("Accounting-Manager", 140000.00, 2),
-       ("Accounting-Team Manager", 80000, 2),
-       ("Legal-Manager", 250000.00, 3),
-       ("Legal-Team Manager", 150000.00, 3),
-       ("Sales-Manager", 70000.00, 4),
-       ("Sales-Team Manager", 50000.00, 4),
-       ("Development-Manager", 150000.00, 5),
-       ("Development-Team Manager", 80000.00, 5);
+VALUES ("HR Manager", 80000.00, 1),
+       ("HR Team Member", 60000.00, 1),
+       ("Accounting Manager", 140000.00, 2),
+       ("Accounting Team Member", 80000, 2),
+       ("Legal Manager", 250000.00, 3),
+       ("Legal Team Manager", 150000.00, 3),
+       ("Sales Manager", 70000.00, 4),
+       ("Sales Team Member", 50000.00, 4),
+       ("Development Manager", 150000.00, 5),
+       ("Development Team Member", 80000.00, 5);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Robert", "Smith", 1, NULL),

@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const displayVariable = require('console.table');
 
+// Question array for inquirer prompt 
 const {
 	mainMenu,
 	deleteDepartment,
@@ -12,11 +13,13 @@ const {
 	addEmployee,
 	updateManager,
 	updateRole,
-	viewEmployeesManager
 } = require('./src/questionsArray');
 
+
+// Queries object with a list of queries
 let queries = require('./src/queries');
 
+// Database connection object
 const dbCon = mysql.createConnection(
 	{
 		host: 'localhost',
@@ -27,6 +30,7 @@ const dbCon = mysql.createConnection(
 	console.log(`Connected!`)
 );
 
+// Main Menu for the application
 const mainMenuPromote = () => {
 	inquirer.prompt(mainMenu).then((selection) => {
 		console.log(selection.selection);
@@ -40,64 +44,110 @@ const mainMenuPromote = () => {
 			case 'view all employees':
 				viewInfo(queries.viewAllEmployeesQuery);
 				break;
-			case  "view employee's manager":
-			  inquirerPrompt(deleteDepartment, queries.deleteDepartmentQuery, deleteDepartmentPromote);
-			  break;
+			// case  "view employee's by manager":
+			//   inquirerPrompt(, , alterInfo);
+			//   break;
+			// case "view employees by department":
+			// 	inquirerPrompt(, , alterInfo);
+			// 	break;
 			case 'add a department':
-				inquirerPrompt(addDepartment, queries.addDepartmentQuery, addInfo);
+				inquirerPrompt(addDepartment, queries.addDepartmentQuery, alterInfo);
 				break;
 			case 'add a role':
-				inquirerPrompt(addRole, queries.addRoleQuery, addInfo);
+				inquirerPrompt(addRole, queries.addRoleQuery, alterInfo);
 				break;
 			case 'add an employee':
-				inquirerPrompt(addEmployee, queries.addEmployeeQuery, addInfo);
+				inquirerPrompt(addEmployee, queries.addEmployeeQuery, alterInfo);
 				break;
-			// case "update an employee's role":
-			// 	inquirerPrompt(updateEmployee, queries.updateEmployeeQuery, );
-			// 	break;
+			case "update an employee's role":
+				updateInfo(queries.updateRoleQuery, updateRole);
+				break;
 			// case "update an employee's manager":
-			// 	inquirerPrompt(updateManager, queries.updateManagerQuery, );
+			// 	inquirerPrompt( , queries.updateManagerQuery, alterInfo);
 			// 	break;
-			case 'delete a department':
-				inquirerPrompt (queries.deleteDepartmentQuery, deleteDepartment, deleteInfo);
-				break;
-			case 'delete a role':
-				inquirerPrompt (queries.deleteRoleQuery, deleteRole, deleteInfo);
-				break;
-			case 'delete an employee':
-				inquirerPrompt (queries.deleteEmployeeQuery, deleteEmployee, deleteInfo);	
-				break;
+			// case 'delete a department':
+			// 	inquirerPrompt( , queries.updateEmployeeQuery, alterInfo);
+			// 	break;
+			// case 'delete a role':
+			// 	inquirerPrompt( , queries.updateEmployeeQuery, alterInfo);
+			// 	break;
+			// case 'delete an employee':
+			// 	inquirerPrompt( , queries.updateEmployeeQuery, alterInfo);
+			// 	break;
 			default:
 				return;
 		}
 	});
 };
 
+// Handle all inquirer prompts and passes a callback function
 const inquirerPrompt = (question, query, nextStep) => {
 	inquirer.prompt(question).then((results) => nextStep(query, results));
 };
 
+// displays the information to the console
 const displayTable = (displayResults) => {
 	console.table(displayResults);
 	mainMenuPromote();
-}
-const viewInfo = (query) => {
-	dbCon.query(query, (error, result) => error ? console.error(error) : displayTable(result))
-}
-const deleteInfo = (query, parameters) => {
-	dbCon.query(query, parameters ,(error, result) => error ? console.error(error) : displayTable(result))
-}
-const addInfo = (query, parameters) => {
-	dbCon.query(query, parameters ,(error, result) => error ? console.error(error) : displayTable(result))
-}
-
-// const viewManagerByEmployee = () => {};
-const addDepartmentPromote = () => {
-
 };
-const addRolePromote = () => {};
-const addEmployeePromote = () => {};
-const updateManagerPromote = () => {};
-const updateRolePromote = () => {};
 
+// displays all view queries
+const viewInfo = (query) => {
+	dbCon.query(query, (error, result) =>
+		error ? console.error(error) : displayTable(result)
+	);
+};
+
+// Creates and delete information from the table
+const alterInfo = (query, results) => {
+	const parameters = Object.values(results);
+	dbCon.query(query, parameters, (error, result) =>
+		error ? console.error(error) : displayTable(result)
+	);
+};
+
+// Creates the list of employees and roles for the update function
+const updateInfo = (query, updateRoles) => {
+	const roles = [];
+	const employees = [];
+	dbCon.query(query[0], (error, result) => {
+		if (error) {
+			console.error(error);
+		} else {
+			result.forEach((empName) => {
+				employees.push(empName.name);
+			});
+			updateRoles[0].choices = employees;
+			dbCon.query(query[1], (error, returnedRole) => {
+				if (error) {
+					console.error(error);
+				} else {
+					returnedRole.forEach((roleTitle) => {
+						roles.push(roleTitle.title);
+					});
+					updateRoles[1].choices = roles;
+					passRoleAndEmployees(query, updateRoles);
+				}
+			});
+		}
+	});
+};
+
+// Updates the user role
+const passRoleAndEmployees = (query, questions) => {
+	inquirer.prompt(questions).then((results) => {
+		const parameters = results.employee.split(' ');
+		parameters.unshift(results.role);
+		console.log(parameters);
+		dbCon.query(query[2], parameters, (error, result) => {
+			if (error) {
+				console.error(error);
+			} else {
+				displayTable(result);
+			}
+		});
+	});
+};
+
+// Starts the application
 mainMenuPromote();
