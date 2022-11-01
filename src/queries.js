@@ -4,9 +4,9 @@ const allQueries = {
 		'INSERT INTO employee_role (title, salary, department_id)Value(?, ?,(SELECT d.id FROM department AS d WHERE d.name = ?))',
 	addEmployeeQuery:
 		'INSERT INTO employee (first_name, last_name, role_id, manager_id) Value(?, ?, (SELECT r.id FROM employee_role AS r WHERE r.title = ?), (SELECT m.id FROM employee AS m WHERE m.first_name = ? AND m.last_name = ? ))',
-	deleteDepartmentQuery: '',
-	deleteRoleQuery: '',
-	deleteEmployeeQuery: '',
+	deleteDepartmentQuery: ['SELECT * FROM department','DELETE FROM department WHERE id = ?'],
+	deleteRoleQuery: ['SELECT title AS name, id FROM employee_role','DELETE FROM employee_role WHERE id = ?'],
+	deleteEmployeeQuery: ['SELECT CONCAT(first_name, " ", last_name) AS name, id FROM employee','DELETE FROM employee WHERE id = ?'],
 	updateManagerQuery: [
 		'SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee',
 		'SELECT DISTINCT CONCAT(m.first_name, " ", m.last_name) AS name, e.manager_id AS id from employee AS e JOIN employee AS m ON e.manager_id = m.id',

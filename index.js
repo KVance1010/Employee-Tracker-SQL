@@ -69,15 +69,15 @@ const mainMenuPromote = () => {
 			case "update an employee's manager":
 				passInfo(updateManager, queries.updateManagerQuery);
 				break;
-			// case 'delete a department':
-			// 	inquirerPrompt( , queries., alterInfo);
-			// 	break;
-			// case 'delete a role':
-			// 	inquirerPrompt( , queries., alterInfo);
-			// 	break;
-			// case 'delete an employee':
-			// 	inquirerPrompt( , queries., alterInfo);
-			// 	break;
+			case 'delete a department':
+				showAllBy( deleteDepartment, queries.deleteDepartmentQuery);
+				break;
+			case 'delete a role':
+				showAllBy(deleteRole , queries.deleteRoleQuery);
+				break;
+			case 'delete an employee':
+				showAllBy(deleteEmployee , queries.deleteEmployeeQuery);
+				break;
 			default:
 				return;
 		}

@@ -7,9 +7,9 @@ const mainMenu = [
 			'add a department',
 			'add an employee',
 			'add a role',
-			// 'delete a department',
-			// 'delete a role',
-			// 'delete an employee',
+			'delete a department',
+			'delete a role',
+			'delete an employee',
 			'update an employee\'s role',
 			'update an employee\'s manager',
 			'view all departments',
@@ -78,25 +78,28 @@ const addRole = [
 
 const deleteDepartment = [
 	{
-		name: 'id',
-		message: 'What is the ID of the department you would like to delete?',
-		type: 'input',
+		name:'name',
+		message: 'select a department to delete',
+		type: 'list',
+		choices: []
 	},
 ];
 
 const deleteEmployee = [
 	{
-		name: 'id',
-		message: 'What is the ID of the employee you would like to delete?',
-		type: 'input',
+		name:'name',
+		message: 'select an employee to delete',
+		type: 'list',
+		choices: []
 	},
 ];
 
 const deleteRole = [
 	{
-		name: 'id',
-		message: 'What is the ID of the role you would like to delete?',
-		type: 'input',
+		name:'name',
+		message: 'select a role to delete',
+		type: 'list',
+		choices: []
 	},
 ];
 
