@@ -79,7 +79,7 @@ const mainMenuPromote = () => {
 				showAllBy(deleteEmployee , queries.deleteEmployeeQuery);
 				break;
 			default:
-				return;
+				process.exit();
 		}
 	});
 };
