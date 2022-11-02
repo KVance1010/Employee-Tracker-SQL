@@ -69,7 +69,7 @@ const mainMenuPromote = () => {
 				showListValues(addRole, queries.addRoleQuery, 2);
 				break;
 			case 'add an employee':
-				inquirerPrompt(addEmployee, queries.addEmployeeQuery);
+				passInfo(addEmployee, queries.addEmployeeQuery);
 				break;
 			case "update an employee's role":
 				passInfo(updateRole, queries.updateRoleQuery);
@@ -157,7 +157,13 @@ const passInfo = (questions, query) => {
 // Updates the user role and manager
 const updateInfo = (query, questions) => {
 	inquirer.prompt(questions).then((results) => {
-		const parameters = [results.name, results.employee];
+		let parameters;
+		if (results.role) {
+			parameters = [results.employee_first_name, results.employee_last_name, results.role, results.name];
+		} else {
+			parameters = [results.name, results.employee];
+		}
+
 		dbCon.query(query, parameters, (error, result) => {
 			if (error) {
 				console.error(error);
@@ -183,6 +189,7 @@ const showListValues = (questions, queries, index) => {
 			});
 			questions[index].choices = arr;
 			inquirer.prompt(questions).then((results) => {
+				// checks to see if there is a results has a title key
 				let parameters;
 				if (results.title) {
 					parameters = [results.title, results.salary, results.name];

@@ -143,7 +143,7 @@ Kyle Vance
 
 If you have any questions regarding this project, please reach me by email at vanceofalifetime@protonmail.com
 
-[Live Link]()
+[Live Link](https://drive.google.com/file/d/1yZGCJlbdRP2ytygFQ0-L8Aq4hoeL1xiW/view)
 
 [LinkedIn](https://www.linkedin.com/in/kyle-s-vance/)
 

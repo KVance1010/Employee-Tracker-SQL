@@ -33,6 +33,18 @@ const addDepartment = [
 ];
 const addEmployee = [
 	{
+		name: 'role',
+		message: 'Select the employees role?',
+		type: 'list',
+		choices: [],
+	},
+	{
+		name: 'name',
+		message: "Select the employee's manager?",
+		type: 'list',
+		choices: [],
+	},
+	{
 		name: 'employee_first_name',
 		message: "What is the employee's first name?",
 		type: 'input',
@@ -41,22 +53,7 @@ const addEmployee = [
 		name: 'employee_last_name',
 		message: "What is the employee's last name?",
 		type: 'input',
-	},
-	{
-		name: 'role_id',
-		message: 'what is the name of the role this employee will be doing?',
-		type: 'input',
-	},
-	{
-		name: 'manager_first',
-		message: 'What is the first name of the manger for this employee?',
-		type: 'input',
-	},
-	{
-		name: 'manager_last',
-		message: 'What is the last name of the manger for this employee?',
-		type: 'input',
-	},
+	}
 ];
 
 const addRole = [
@@ -156,7 +153,6 @@ const viewTotalByD = [{
 	type: 'list',
 	choices: []
 }];
-
 
 module.exports = {
 	mainMenu,
