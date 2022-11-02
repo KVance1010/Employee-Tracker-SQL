@@ -60,15 +60,21 @@ const addEmployee = [
 
 const addRole = [
 	{
-		name: 'role_title',
+		name: 'title',
 		message: 'What is new role you would like to add?',
 		type: 'input',
 	},
 	{
-		name: 'role_salary',
+		name: 'salary',
 		message: 'what is the salary of this role?',
 		type: 'input',
 	},
+	// {
+	// 	name:'name',
+	// 	message: 'select a department for this role',
+	// 	type: 'list',
+	// 	choices: []
+	// }
 	{
 		name: 'department_id',
 		message: 'What is the department name for this role?',

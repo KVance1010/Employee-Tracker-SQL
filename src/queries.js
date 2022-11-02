@@ -1,6 +1,8 @@
 const allQueries = {
 	addDepartmentQuery: 'INSERT INTO department (name) VALUE (?)',
 	addRoleQuery:
+	// ['SELECT * FROM department',
+	// 	'INSERT INTO employee_role (title, salary, department_id)Value(?, ?,?)'],
 		'INSERT INTO employee_role (title, salary, department_id)Value(?, ?,(SELECT d.id FROM department AS d WHERE d.name = ?))',
 	addEmployeeQuery:
 		'INSERT INTO employee (first_name, last_name, role_id, manager_id) Value(?, ?, (SELECT r.id FROM employee_role AS r WHERE r.title = ?), (SELECT m.id FROM employee AS m WHERE m.first_name = ? AND m.last_name = ? ))',
