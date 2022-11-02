@@ -15,6 +15,7 @@ const {
 	updateRole,
 	showEmployeeByManager,
 	showEmployeeByDepartment,
+	viewTotalByD
 } = require('./src/questionsArray');
 
 // Queries object with a list of queries
@@ -48,14 +49,14 @@ const mainMenuPromote = () => {
 				viewInfo(queries.viewDepartmentPayrollQuery);
 				break;
 			case "view employee's by manager":
-				showAllBy(
+				showListValues(
 					showEmployeeByManager,
 					queries.viewEmployeesByManagerQuery,
 					0
 				);
 				break;
 			case 'view employees by department':
-				showAllBy(
+				showListValues(
 					showEmployeeByDepartment,
 					queries.viewAllEmployeesByDepartment,
 					0
@@ -68,7 +69,7 @@ const mainMenuPromote = () => {
 				showListValues(addRole, queries.addRoleQuery, 2);
 				break;
 			case 'add an employee':
-				// inquirerPrompt(addEmployee, queries.addEmployeeQuery);
+				inquirerPrompt(addEmployee, queries.addEmployeeQuery);
 				break;
 			case "update an employee's role":
 				passInfo(updateRole, queries.updateRoleQuery);
@@ -84,6 +85,9 @@ const mainMenuPromote = () => {
 				break;
 			case 'delete an employee':
 				showListValues(deleteEmployee, queries.deleteEmployeeQuery, 0);
+				break;
+			case 'view totals by department':
+				showListValues(viewTotalByD, queries.viewTotalsByDepartment, 0);
 				break;
 			default:
 				process.exit();

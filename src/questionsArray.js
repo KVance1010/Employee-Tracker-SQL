@@ -18,6 +18,7 @@ const mainMenu = [
 			'view all departments total payroll',
 			'view employees by department',
 			'view employee\'s by manager',
+			'view totals by department',
 			'quit',
 		],
 	},
@@ -149,6 +150,13 @@ const updateRole = [
 	},
 ];
 
+const viewTotalByD = [{
+	name:'name',
+	message: 'Select the department to view payroll totals',
+	type: 'list',
+	choices: []
+}];
+
 
 module.exports = {
 	mainMenu,
@@ -161,5 +169,6 @@ module.exports = {
 	updateManager,
 	updateRole,
 	showEmployeeByManager,
-	showEmployeeByDepartment
+	showEmployeeByDepartment,
+	viewTotalByD
 };
