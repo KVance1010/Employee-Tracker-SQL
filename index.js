@@ -1,8 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const displayVariable = require('console.table');
-
-// mysql -u (database) -h (host) -p (password)
+require('console.table');
 
 // Question array for inquirer prompt
 const {
@@ -16,12 +14,13 @@ const {
 	updateManager,
 	updateRole,
 	showEmployeeByManager,
-	showEmployeeByDepartment
+	showEmployeeByDepartment,
 } = require('./src/questionsArray');
 
 // Queries object with a list of queries
 let queries = require('./src/queries');
 
+// mysql -u (database) -h (host) -p (password)
 // Database connection object
 const con = process.env.JAWSDB_URL || {
 	host: 'localhost',
@@ -45,23 +44,31 @@ const mainMenuPromote = () => {
 			case 'view all employees':
 				viewInfo(queries.viewAllEmployeesQuery);
 				break;
-			case 'view department total payroll total':
+			case 'view all departments total payroll':
 				viewInfo(queries.viewDepartmentPayrollQuery);
 				break;
 			case "view employee's by manager":
-				showAllBy(showEmployeeByManager, queries.viewEmployeesByManagerQuery);
+				showAllBy(
+					showEmployeeByManager,
+					queries.viewEmployeesByManagerQuery,
+					0
+				);
 				break;
-			case "view employees by department":
-				showAllBy(showEmployeeByDepartment, queries.viewAllEmployeesByDepartment);
+			case 'view employees by department':
+				showAllBy(
+					showEmployeeByDepartment,
+					queries.viewAllEmployeesByDepartment,
+					0
+				);
 				break;
 			case 'add a department':
 				inquirerPrompt(addDepartment, queries.addDepartmentQuery);
 				break;
 			case 'add a role':
-				inquirerPrompt(addRole, queries.addRoleQuery);
+				showListValues(addRole, queries.addRoleQuery, 2);
 				break;
 			case 'add an employee':
-				inquirerPrompt(addEmployee, queries.addEmployeeQuery);
+				// inquirerPrompt(addEmployee, queries.addEmployeeQuery);
 				break;
 			case "update an employee's role":
 				passInfo(updateRole, queries.updateRoleQuery);
@@ -70,13 +77,13 @@ const mainMenuPromote = () => {
 				passInfo(updateManager, queries.updateManagerQuery);
 				break;
 			case 'delete a department':
-				showAllBy( deleteDepartment, queries.deleteDepartmentQuery);
+				showListValues(deleteDepartment, queries.deleteDepartmentQuery, 0);
 				break;
 			case 'delete a role':
-				showAllBy(deleteRole , queries.deleteRoleQuery);
+				showListValues(deleteRole, queries.deleteRoleQuery, 0);
 				break;
 			case 'delete an employee':
-				showAllBy(deleteEmployee , queries.deleteEmployeeQuery);
+				showListValues(deleteEmployee, queries.deleteEmployeeQuery, 0);
 				break;
 			default:
 				process.exit();
@@ -157,8 +164,8 @@ const updateInfo = (query, questions) => {
 	});
 };
 
-// shows all employees by department or manager
-const showAllBy = (questions, queries) => {
+// Generic function that takes in a list of question, queries, and and location of the list in the object
+const showListValues = (questions, queries, index) => {
 	const arr = [];
 	dbCon.query(queries[0], (error, returned) => {
 		if (error) {
@@ -170,9 +177,14 @@ const showAllBy = (questions, queries) => {
 					value: element.id,
 				});
 			});
-			questions[0].choices = arr;
+			questions[index].choices = arr;
 			inquirer.prompt(questions).then((results) => {
-				const parameters = [results.name];
+				let parameters;
+				if (results.title) {
+					parameters = [results.title, results.salary, results.name];
+				} else {
+					parameters = [results.name];
+				}
 				dbCon.query(queries[1], parameters, (error, result) => {
 					error ? console.error(error) : displayTable(result);
 				});

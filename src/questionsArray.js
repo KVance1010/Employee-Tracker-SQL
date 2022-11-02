@@ -15,7 +15,7 @@ const mainMenu = [
 			'view all departments',
 			'view all roles',
 			'view all employees',
-			'view department total payroll total',
+			'view all departments total payroll',
 			'view employees by department',
 			'view employee\'s by manager',
 			'quit',
@@ -69,17 +69,12 @@ const addRole = [
 		message: 'what is the salary of this role?',
 		type: 'input',
 	},
-	// {
-	// 	name:'name',
-	// 	message: 'select a department for this role',
-	// 	type: 'list',
-	// 	choices: []
-	// }
 	{
-		name: 'department_id',
-		message: 'What is the department name for this role?',
-		type: 'input',
-	},
+		name:'name',
+		message: 'select a department for this role',
+		type: 'list',
+		choices: []
+	}
 ];
 
 const deleteDepartment = [
